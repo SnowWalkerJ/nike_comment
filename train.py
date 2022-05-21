@@ -28,10 +28,12 @@ with open("data/processed.pkl", "rb") as f:
 random.seed(0)
 random.shuffle(data)
 print(data[0].sentence)
-data = data[:100000]
-count = int(len(data) * 0.7)
-train_data = data[:count]
-valid_data = data[count:]
+test_count = 50000
+validation_count = 10000
+data = data[:-test_count]
+
+train_data = data[:-validation_count]
+valid_data = data[-validation_count:]
 print("train:", len(train_data))
 print("valid:", len(valid_data))
 
@@ -78,4 +80,4 @@ for epoch in range(num_epoch):
             validation_weight += weight
         print(epoch, np.mean(validation_loss) / validation_weight)
 
-    th.save(predictor, f"checkpoint/conv1d-100k-{epoch:03d}.pkl")
+    th.save(predictor, f"checkpoint/conv1d-all-{epoch:03d}.pkl")
