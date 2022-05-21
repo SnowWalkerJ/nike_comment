@@ -66,6 +66,8 @@ for epoch in range(num_epoch):
 
     update(batch)
 
+    th.save(predictor, f"checkpoint/conv1d-all-{epoch:03d}.pkl")
+
     validation_loss = []
     validation_weight = 0
     with th.no_grad():
@@ -79,5 +81,3 @@ for epoch in range(num_epoch):
             validation_loss.append(loss)
             validation_weight += weight
         print(epoch, np.mean(validation_loss) / validation_weight)
-
-    th.save(predictor, f"checkpoint/conv1d-all-{epoch:03d}.pkl")
